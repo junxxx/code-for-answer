@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sync"
 	"testing"
 	"time"
 
@@ -23,16 +24,22 @@ func testConcurrency(t *testing.T) {
 	time.Sleep(1 * time.Second)
 }
 
-func TestSafeBank(t *testing.T) {
+func testSafeBank(t *testing.T) {
+	var n sync.WaitGroup
 	// Alice
+	n.Add(1)
 	go func() {
 		safebank.Deposit(200)
 		fmt.Println("safe version balance =", safebank.Balance())
+		n.Done()
 	}()
 
 	// Bob
-	go safebank.Deposit(100)
-
+	n.Add(1)
+	go func() {
+		safebank.Deposit(100)
+		n.Done()
+	}()
 	// waiting for goroutine finish
-	time.Sleep(1 * time.Second)
+	n.Wait()
 }

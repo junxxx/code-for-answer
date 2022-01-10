@@ -4,7 +4,7 @@ package safebank
 import "sync"
 
 var (
-	mu      sync.Mutex
+	mu      sync.RWMutex
 	balance int
 )
 
@@ -14,7 +14,7 @@ func Deposit(amount int) {
 	mu.Unlock()
 }
 func Balance() int {
-	mu.Lock()
-	defer mu.Unlock()
+	mu.RLock()
+	defer mu.RUnlock()
 	return balance
 }
