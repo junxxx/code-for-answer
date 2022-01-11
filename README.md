@@ -12,7 +12,11 @@ The porpose of this repository is that get the right answer use Golang code.
     `new` only returns pointers to initialised memory.
 3. Concurrency problems
     - Is `map` concurrent-safe?
+        No, [see more](https://go.dev/blog/maps#TOC_6.)
     - How to implement a concurrent-safe `map`?
+        a. use sync.RWMutex
+        b. use sync.Map
+        c. only one goroutine has access to the value at any given time.
 
     Do not communicate by sharing memory; instead, share memory by communicating.
 
