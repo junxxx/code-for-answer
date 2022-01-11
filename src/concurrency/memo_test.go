@@ -11,23 +11,34 @@ import (
 	"github.com/junxxx/codeforgetanswer/concurrency/memo"
 )
 
-func incomingURLs() []string {
-	return []string{
-		"https://www.baidu.com",
-		"https://www.zhihu.com",
-		"https://www.qq.com",
-		"http://www.paisen.site",
-		"https://www.baidu.com",
-		"https://www.zhihu.com",
-		"https://www.qq.com",
-		"http://www.paisen.site",
-	}
+func incomingURLs() <-chan string {
+	ch := make(chan string)
+	go func() {
+		for _, url := range []string{
+			"https://www.baidu.com",
+			"https://www.zhihu.com",
+			"https://www.qq.com",
+			"http://www.paisen.site",
+			"https://www.baidu.com",
+			"https://www.zhihu.com",
+			"https://www.qq.com",
+			"http://www.paisen.site",
+			"https://www.baidu.com",
+			"https://www.zhihu.com",
+			"https://www.qq.com",
+			"http://www.paisen.site",
+		} {
+			ch <- url
+		}
+		close(ch)
+	}()
+	return ch
 }
 
 func TestMemo(t *testing.T) {
 	m := memo.New(cache.HttpGetBody)
 	var n sync.WaitGroup
-	for _, url := range incomingURLs() {
+	for url := range incomingURLs() {
 		n.Add(1)
 		go func(url string) {
 			start := time.Now()
