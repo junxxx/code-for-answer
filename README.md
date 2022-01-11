@@ -23,5 +23,12 @@ The porpose of this repository is that get the right answer use Golang code.
     - Not to write the variable
     - Avoid accessing the variable from multiple goroutines
     - Allow many goroutines to access the variable, but only one at a time(mutual exclusion)
+4. process, thread, goroutines
+    - Stack
+        Each OS thread has a fixed-size `stack`(often 2MB). But a goroutine start life with a small stack, typically 2KB.It grows and shrinks as needed.
+
+    - Scheduling
+        Thread scheduled by OS kernel. Next a switch to kernel context
+        Go runtime contains its own scheduler that use a technique known as `m:n scheduling`.It multiplexes `m` goroutines on `n` OS threads. Do not need a switch to kernel context, rescheduling a goroutine is much cheaper than rescheduling a thread.
     
 
