@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"hash/crc32"
 	"log"
 
 	"github.com/junxxx/greetings"
@@ -17,4 +18,6 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Println(messages)
+	crc32q := crc32.MakeTable(0xD5828281)
+	fmt.Printf("%08x\n", crc32.Checksum([]byte("Amazon Redshift"), crc32q))
 }
