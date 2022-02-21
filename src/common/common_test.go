@@ -2,12 +2,20 @@ package common
 
 import (
 	"fmt"
+	"reflect"
 	"sync"
 	"testing"
 )
 
 func display(a interface{}) {
 	fmt.Println(a)
+}
+
+func TestSlice(t *testing.T) {
+	s := "Hello World"
+	as := s[2:] + s[:2]
+	fmt.Printf("%T\n", as)
+	fmt.Println("type of as is:", reflect.TypeOf(as))
 }
 
 func TestConvert(t *testing.T) {
