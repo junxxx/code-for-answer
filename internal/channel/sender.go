@@ -6,6 +6,21 @@ import (
 )
 
 var c = make(chan int)
+var carraier = make(chan int, 5)
+
+func Producer(amount int) {
+	for amount > 0 {
+		carraier <- amount
+		amount--
+	}
+	close(carraier)
+}
+
+func Consumer(number int) {
+	if n, ok := <-carraier; ok {
+		fmt.Println(number, "data from channel: ", n)
+	}
+}
 
 func Send(timers int) {
 	for {
