@@ -15,3 +15,7 @@ func TestConsumer(t *testing.T) {
 	}
 	Consumer(-1)
 }
+
+func TestChannel(t *testing.T) {
+	Entrypoint()
+}
